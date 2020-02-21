@@ -32,3 +32,5 @@ export const ActivityList: React.FC<IProps> = ({ activities }) => {
     </Segment>
   );
 };
+
+export default ActivityList;
