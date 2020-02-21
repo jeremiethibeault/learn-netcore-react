@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Application.Activities;
 using Domain;
@@ -18,11 +20,22 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        // GET api/values
         [HttpGet]
-        public async Task<ActionResult<List<Activity>>> List()
+        public async Task<ActionResult<List<Activity>>> List(CancellationToken ct)
         {
-            return await _mediator.Send(new List.Query());
+            return await _mediator.Send(new List.Query(), ct);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Activity>> Details(Guid id, CancellationToken ct)
+        {
+            return await _mediator.Send(new Details.Query{ Id = id }, ct);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Unit>> Create(Create.Command command, CancellationToken ct)
+        {
+            return await _mediator.Send(command, ct);
         }
     }
 }
