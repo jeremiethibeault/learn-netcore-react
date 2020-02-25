@@ -16,3 +16,4 @@
 - Semantic UI - React for the styling
 - TypeScript for code logic
 - Axios for http requests
+- MobX for state management
