@@ -17,3 +17,4 @@
 - TypeScript for code logic
 - Axios for http requests
 - MobX for state management
+- React Router for routing
