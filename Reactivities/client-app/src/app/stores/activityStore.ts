@@ -13,8 +13,26 @@ export class ActivityStore {
   @observable target = "";
 
   @computed get activitiesByDate() {
-    return Array.from(this.activityRegistry.values()).sort(
+    return this.groupActivitiesByDate(
+      Array.from(this.activityRegistry.values())
+    );
+  }
+
+  groupActivitiesByDate(activities: IActivity[]) {
+    const sortedActvities = activities.sort(
       (a, b) => Date.parse(a.date) - Date.parse(b.date)
+    );
+
+    return Object.entries(
+      sortedActvities.reduce((activities, activity) => {
+        const date = activity.date.split("T")[0];
+
+        activities[date] = activities[date]
+          ? [...activities[date], activity]
+          : [activity];
+
+        return activities;
+      }, {} as { [key: string]: IActivity[] })
     );
   }
 
@@ -82,7 +100,7 @@ export class ActivityStore {
     try {
       this.submitting = true;
       this.target = event.currentTarget.name;
-      
+
       await agent.Activities.delete(id);
 
       runInAction(() => {
@@ -99,7 +117,7 @@ export class ActivityStore {
     }
   };
 
-  @action loadActivity =  async (id: string) => {
+  @action loadActivity = async (id: string) => {
     let activity = this.getActivity(id);
 
     if (activity) {
@@ -120,15 +138,15 @@ export class ActivityStore {
         });
       }
     }
-  }
+  };
 
   getActivity = (id: string) => {
     return this.activityRegistry.get(id);
-  }
+  };
 
   @action clearActivity = () => {
     this.activity = null;
-  }
+  };
 }
 
 export default createContext(new ActivityStore());
