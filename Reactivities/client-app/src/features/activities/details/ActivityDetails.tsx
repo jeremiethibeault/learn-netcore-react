@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
-import { Card, Image, Button, Grid } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
-import { RouteComponentProps, Link } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import ActivityStore from "../../../app/stores/activityStore";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import ActivityDetailsHeader from "./ActivityDetailsHeader";
@@ -14,15 +14,14 @@ interface DetailsParams {
 }
 
 const ActivityDetails: React.FC<RouteComponentProps<DetailsParams>> = ({
-  match,
-  history
+  match
 }) => {
   const activityStore = useContext(ActivityStore);
 
   const { activity, loadActivity, loadingInitial } = activityStore;
 
   useEffect(() => {
-    loadActivity(match.params.id).then(() => console.log("A"));
+    loadActivity(match.params.id);
   }, [loadActivity, match.params.id]);
 
   if (loadingInitial || !activity)
