@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { Item, Button, Label, Segment } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
-import ActivityStore from "../../../app/stores/activityStore";
 import { Link } from "react-router-dom";
+import ActivityStore from "../../../app/stores/activityStore";
 
-export const ActivityList: React.FC = () => {
+const ActivityList: React.FC = () => {
 
   const activityStore = useContext(ActivityStore);
   const {activitiesByDate: activities, deleteActivity, submitting, target} = activityStore;

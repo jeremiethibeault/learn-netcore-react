@@ -10,7 +10,7 @@ interface FormParams {
   id: string;
 }
 
-export const ActivityForm: React.FC<RouteComponentProps<FormParams>> = ({
+const ActivityForm: React.FC<RouteComponentProps<FormParams>> = ({
   match,
   history
 }) => {

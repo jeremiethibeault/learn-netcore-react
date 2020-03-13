@@ -1,15 +1,15 @@
 import React, { useContext, useEffect } from "react";
 import { Card, Image, Button } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
-import ActivityStore from "../../../app/stores/activityStore";
 import { RouteComponentProps, Link } from "react-router-dom";
-import { LoadingComponent } from "../../../app/layout/LoadingComponent";
+import ActivityStore from "../../../app/stores/activityStore";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 
 interface DetailsParams {
   id: string;
 }
 
-export const ActivityDetails: React.FC<RouteComponentProps<DetailsParams>> = ({
+const ActivityDetails: React.FC<RouteComponentProps<DetailsParams>> = ({
   match,
   history
 }) => {
