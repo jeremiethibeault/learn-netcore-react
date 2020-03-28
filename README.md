@@ -5,16 +5,16 @@
 ## Technologies
 
 ### Backend / API
-- .NET Core 3.0 for the API and controllers
-- EntityFramework as a code first ORM (object-relational mapping)
-- SQLite as a database provider
-- MediatR for CQRS (Command and queries responsibility segregation)
-- Middlewares for error handling
-- FluentValidation for data validation
+- [.NET Core 3.0](https://github.com/dotnet/aspnetcore) for the API and controllers
+- [EntityFrameworkCore](https://docs.microsoft.com/en-us/ef/core/) as a code first ORM (object-relational mapping)
+- [SQLite](https://www.sqlite.org/index.html) as a database provider
+- [MediatR](https://github.com/jbogard/MediatR) for CQRS (Command and queries responsibility segregation)
+- [ASP Middlewares](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-3.1) for error handling
+- [FluentValidation](https://fluentvalidation.net/) for data validation
 
 ### Frontend / Client
-- React for the SPA (single page application)
-- TypeScript for code logic
+- [React](https://reactjs.org/) for the SPA (single page application)
+- [TypeScript](https://www.typescriptlang.org/) for code logic
 - [Axios](https://github.com/axios/axios) for http requests
 - [MobX](https://mobx.js.org/README.html) for state management
 - [React Hooks](https://reactjs.org/docs/hooks-intro.html) for state mangement
