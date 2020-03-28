@@ -9,12 +9,20 @@
 - EntityFramework as a code first ORM (object-relational mapping)
 - SQLite as a database provider
 - MediatR for CQRS (Command and queries responsibility segregation)
+- Middlewares for error handling
+- FluentValidation for data validation
 
 ### Frontend / Client
 - React for the SPA (single page application)
-- React Hooks for state mangement
-- Semantic UI - React for the styling
 - TypeScript for code logic
 - Axios for http requests
 - MobX for state management
-- React Router for routing
+- React Hooks for state mangement
+- React Semantic UI for styling
+- React Router for navigation routing
+- React Toastify to show toasts
+- React Widgets for UI controls
+- React Final Form for forms
+- Date-Fns for date handling
+- Revalidate for data validation
+- Uuid for id generations
