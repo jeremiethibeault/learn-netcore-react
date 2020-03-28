@@ -2,6 +2,8 @@ import { observable, action, computed, configure, runInAction } from "mobx";
 import { createContext, SyntheticEvent } from "react";
 import { IActivity } from "../models/activity";
 import agent from "../api/agent";
+import { history } from "../..";
+import { toast } from "react-toastify";
 
 configure({ enforceActions: "always" });
 
@@ -66,11 +68,13 @@ export class ActivityStore {
         this.activityRegistry.set(activity.id, activity);
         this.submitting = false;
       });
+
+      history.push(`/activities/${activity.id}`);
     } catch (error) {
-      console.log(error);
       runInAction(() => {
         this.submitting = false;
       });
+      toast.error("Error submitting data");
     }
   };
 
@@ -85,11 +89,13 @@ export class ActivityStore {
         this.activity = activity;
         this.submitting = false;
       });
+
+      history.push(`/activities/${activity.id}`);
     } catch (error) {
-      console.log(error);
       runInAction(() => {
         this.submitting = false;
       });
+      toast.error("Error submitting data");
     }
   };
 
@@ -109,11 +115,11 @@ export class ActivityStore {
         this.target = "";
       });
     } catch (error) {
-      console.log(error);
       runInAction(() => {
         this.submitting = false;
         this.target = "";
       });
+      toast.error("Error submitting data");
     }
   };
 
@@ -122,21 +128,24 @@ export class ActivityStore {
 
     if (activity) {
       this.activity = activity;
+      return activity;
     } else {
       try {
         this.loadingInitial = true;
         activity = await agent.Activities.details(id);
 
-        runInAction(() => {
+        return runInAction(() => {
           activity.date = new Date(activity.date);
           this.activity = activity;
+          this.activityRegistry.set(activity.id, activity);
           this.loadingInitial = false;
+          return activity;
         });
       } catch (error) {
-        console.log(error);
         runInAction(() => {
           this.loadingInitial = false;
         });
+        toast.error("Error loading data");
       }
     }
   };
