@@ -1,10 +1,12 @@
-﻿using API.Middleware;
+﻿using System.Text;
+using API.Middleware;
 using Application.Activities;
 using Application.Interfaces;
 using Domain;
 using FluentValidation.AspNetCore;
 using Infrastructure.Security;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Persistence;
 
 namespace API
@@ -28,12 +31,12 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(opt => 
+            services.AddDbContext<DataContext>(opt =>
             {
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddCors(opt => 
+            services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
@@ -49,7 +52,7 @@ namespace API
             services
                 .AddMvc(o => o.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddFluentValidation(cfg => 
+                .AddFluentValidation(cfg =>
                 {
                     cfg.RegisterValidatorsFromAssemblyContaining<Create>();
                 });
@@ -59,7 +62,19 @@ namespace API
             identityBuilder.AddEntityFrameworkStores<DataContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
-            services.AddAuthentication();
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super secret key"));
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = key,
+                    ValidateAudience = false,
+                    ValidateIssuer = false
+                };
+            });
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
         }
@@ -82,6 +97,9 @@ namespace API
             // app.UseHttpsRedirection();
 
             app.UseCors("CorsPolicy");
+            
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseMvc();
         }
