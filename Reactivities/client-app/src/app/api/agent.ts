@@ -6,6 +6,21 @@ import { IUser, IUserFormValues } from "../models/user";
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
+axios.interceptors.request.use(
+  config => {
+    const token = window.localStorage.getItem("jwt");
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
 axios.interceptors.response.use(undefined, error => {
   if (error.message === "Network Error" && error.response === undefined) {
     toast.error("Network error - Make sure the API is running");
@@ -17,7 +32,11 @@ axios.interceptors.response.use(undefined, error => {
     history.push("/notfound");
   }
 
-  if (status === 400 && config.method === "get" && data.errors.hasOwnProperty("id")) {
+  if (
+    status === 400 &&
+    config.method === "get" &&
+    data.errors.hasOwnProperty("id")
+  ) {
     history.push("/notfound");
   }
 
@@ -36,10 +55,26 @@ const sleep = (ms: number) => (response: AxiosResponse) =>
   );
 
 const requests = {
-  get: (url: string) => axios.get(url).then(sleep(1000)).then(responseBody),
-  post: (url: string, body: {}) => axios.post(url, body).then(sleep(1000)).then(responseBody),
-  put: (url: string, body: {}) => axios.put(url, body).then(sleep(1000)).then(responseBody),
-  delete: (url: string) => axios.delete(url).then(sleep(1000)).then(responseBody)
+  get: (url: string) =>
+    axios
+      .get(url)
+      .then(sleep(1000))
+      .then(responseBody),
+  post: (url: string, body: {}) =>
+    axios
+      .post(url, body)
+      .then(sleep(1000))
+      .then(responseBody),
+  put: (url: string, body: {}) =>
+    axios
+      .put(url, body)
+      .then(sleep(1000))
+      .then(responseBody),
+  delete: (url: string) =>
+    axios
+      .delete(url)
+      .then(sleep(1000))
+      .then(responseBody)
 };
 
 const Activities = {
@@ -54,9 +89,11 @@ const Activities = {
 
 const User = {
   current: (): Promise<IUser> => requests.get("/user"),
-  login: (user: IUserFormValues): Promise<IUser> => requests.post(`/user/login`, user),
-  register: (user: IUserFormValues): Promise<IUser> => requests.post(`/user/register`, user)
-}
+  login: (user: IUserFormValues): Promise<IUser> =>
+    requests.post(`/user/login`, user),
+  register: (user: IUserFormValues): Promise<IUser> =>
+    requests.post(`/user/register`, user)
+};
 
 export default {
   Activities,

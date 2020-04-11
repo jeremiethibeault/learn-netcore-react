@@ -25,10 +25,28 @@ export default class UserStore {
         this.user = user;
       });
 
+      this.rootStore.commonStore.setToken(user.token);
       history.push("/activities");
     } catch (error) {
       console.log(error);
       throw error;
     }
   };
+
+  @action getUser = async () => {
+    try {
+      const user = await agent.User.current();
+      runInAction(() => {
+        this.user = user;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  @action logout = () => {
+    this.rootStore.commonStore.setToken(null);
+    this.user = null;
+    history.push("/");
+  }
 }
