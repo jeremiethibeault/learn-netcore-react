@@ -11,6 +11,7 @@
 - [MediatR](https://github.com/jbogard/MediatR) for CQRS (Command and queries responsibility segregation)
 - [ASP Middlewares](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-3.1) for error handling
 - [FluentValidation](https://fluentvalidation.net/) for data validation
+- [User-secrets](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows) for secret storage
 
 ### Frontend / Client
 - [React](https://reactjs.org/) for the SPA (single page application)
@@ -26,3 +27,9 @@
 - [Date-Fns](https://date-fns.org/) for date handling
 - [Revalidate](https://github.com/jfairbank/revalidate) for data validation
 - [Uuid](https://www.npmjs.com/package/uuidv4) for id generations
+
+## Running the project
+
+1. Start the backend API: `cd API` then `dotnet run`.
+
+1. Start the web client: `cd client-app` then `npm start`.
