@@ -12,6 +12,7 @@
 - [ASP Middlewares](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-3.1) for error handling
 - [FluentValidation](https://fluentvalidation.net/) for data validation
 - [User-secrets](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows) for secret storage
+- [Cloudinary](https://cloudinary.com/) for image cloud storage.
 
 ### Frontend / Client
 - [React](https://reactjs.org/) for the SPA (single page application)
