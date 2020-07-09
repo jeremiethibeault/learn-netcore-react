@@ -13,6 +13,7 @@
 - [FluentValidation](https://fluentvalidation.net/) for data validation
 - [User-secrets](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows) for secret storage
 - [Cloudinary](https://cloudinary.com/) for image cloud storage.
+- [Microsoft SignalR](https://docs.microsoft.com/en-us/aspnet/core/tutorials/signalr?view=aspnetcore-3.1&tabs=visual-studio) for realtime WebSocket updates
 
 ### Frontend / Client
 - [React](https://reactjs.org/) for the SPA (single page application)
@@ -28,6 +29,9 @@
 - [Date-Fns](https://date-fns.org/) for date handling
 - [Revalidate](https://github.com/jfairbank/revalidate) for data validation
 - [Uuid](https://www.npmjs.com/package/uuidv4) for id generations
+- [React Cropper](https://www.npmjs.com/package/react-cropper) for image cropping
+- [React Dropzone](https://www.npmjs.com/package/react-dropzone) for file upload
+- [Microsoft SignalR](https://www.npmjs.com/package/@microsoft/signalr) for realtime WebSocket updates
 
 ## Running the project
 
