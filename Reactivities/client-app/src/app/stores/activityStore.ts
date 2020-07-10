@@ -12,6 +12,8 @@ import {
   LogLevel,
 } from "@microsoft/signalr";
 
+const LIMIT = 2;
+
 export default class ActivityStore {
   rootStore: RootStore;
 
@@ -26,6 +28,16 @@ export default class ActivityStore {
   @observable target = "";
   @observable loading = false;
   @observable.ref hubConnection: HubConnection | null = null;
+  @observable activityCount = 0;
+  @observable page = 0;
+
+  @computed get totalPages() {
+    return Math.ceil(this.activityCount / LIMIT)
+  }
+
+  @action setPage = (page: number) => {
+    this.page = page;
+  }
 
   @action createHubConnection = (activityId: string) => {
     this.hubConnection = new HubConnectionBuilder()
@@ -99,13 +111,15 @@ export default class ActivityStore {
   @action loadActivities = async () => {
     try {
       this.loadingInitial = true;
-      const activities = await agent.Activities.list();
+      const activitiesEnvelope = await agent.Activities.list(LIMIT, this.page);
+      const { activities, activityCount } = activitiesEnvelope;
 
       runInAction(() => {
         activities.forEach((a) => {
           setActivityProps(a, this.rootStore.userStore.user!);
           this.activityRegistry.set(a.id, a);
         });
+        this.activityCount = activityCount;
         this.loadingInitial = false;
       });
     } catch (error) {
