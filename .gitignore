@@ -3,3 +3,4 @@ obj
 .DS_Store
 *.db
 wwwroot
+publish

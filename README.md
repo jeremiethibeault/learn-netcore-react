@@ -33,6 +33,7 @@
 - [React Dropzone](https://www.npmjs.com/package/react-dropzone) for file upload
 - [Microsoft SignalR](https://www.npmjs.com/package/@microsoft/signalr) for realtime WebSocket updates
 - [React Infinite Scroller](https://www.npmjs.com/package/react-infinite-scroller) for infinite scrolling
+- [Security Headers](https://securityheaders.com/) to check security grade of the web app.
 
 ### Database
 
@@ -51,6 +52,6 @@
 
 ## Building the project for deployment
 
-1. Build the web client: `cd client-app` then `npm build`.
+1. Build the web client: `cd client-app` then `npm run build`.
 
 1. This will create an optimized webapp and move it to the `wwwroot` folder of the API.
