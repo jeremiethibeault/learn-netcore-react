@@ -32,6 +32,7 @@
 - [React Cropper](https://www.npmjs.com/package/react-cropper) for image cropping
 - [React Dropzone](https://www.npmjs.com/package/react-dropzone) for file upload
 - [Microsoft SignalR](https://www.npmjs.com/package/@microsoft/signalr) for realtime WebSocket updates
+- [React Infinite Scroller](https://www.npmjs.com/package/react-infinite-scroller) for infinite scrolling
 
 ## Running the project
 
