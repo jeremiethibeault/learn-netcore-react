@@ -39,3 +39,9 @@
 1. Start the backend API: `cd API` then `dotnet run`.
 
 1. Start the web client: `cd client-app` then `npm start`.
+
+## Building the project for deployment
+
+1. Build the web client: `cd client-app` then `npm build`.
+
+1. This will create an optimized webapp and move it to the `wwwroot` folder of the API.
