@@ -34,6 +34,15 @@
 - [Microsoft SignalR](https://www.npmjs.com/package/@microsoft/signalr) for realtime WebSocket updates
 - [React Infinite Scroller](https://www.npmjs.com/package/react-infinite-scroller) for infinite scrolling
 
+### Database
+
+- For development purposes an SQLite database was used.
+
+- For testing purposes, a MySQL server (community) was used.
+    - Install [MySQL server Community](https://downloads.mysql.com/archives/community/).
+
+    - Create a user `appuser`.
+
 ## Running the project
 
 1. Start the backend API: `cd API` then `dotnet run`.
