@@ -11,7 +11,6 @@ import {
 } from "semantic-ui-react";
 import { IProfile } from "../../app/models/profile";
 import { observer } from "mobx-react-lite";
-import { RootStoreContext } from "../../app/stores/rootStore";
 
 interface IProps {
   profile: IProfile;
