@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { IUser, IUserFormValues } from "../models/user";
 import { IProfile, IPhoto } from "../models/profile";
 import { URLSearchParams } from "url";
+import { userInfo } from "os";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
@@ -24,6 +25,8 @@ axios.interceptors.request.use(
 );
 
 axios.interceptors.response.use(undefined, error => {
+  const originalRequest = error.config;
+
   if (error.message === "Network Error" && error.response === undefined) {
     toast.error("Network error - Make sure the API is running");
   }
@@ -33,11 +36,27 @@ axios.interceptors.response.use(undefined, error => {
     history.push("/notfound");
   }
 
-  if (status === 401 && String(headers["www-authenticate"]).startsWith('Bearer error="invalid_token", error_description="The token expired')) {
-    console.log(error.response);
+  if (status === 401 && originalRequest.url.endsWith("refresh"))
+  {
     window.localStorage.removeItem("jwt");
+    window.localStorage.removeItem("refreshToken");
     history.push("/");
     toast.info("Your session has expired, please login again.");
+    return Promise.reject(error);
+  }
+
+  if (status === 401 && !originalRequest._retry) {
+    originalRequest._retry = true;
+
+    return axios.post("user/refresh", {
+      "token": window.localStorage.getItem("jwt"),
+      "refreshToken": window.localStorage.getItem("refreshToken")
+    }).then(res => {
+      window.localStorage.setItem("jwt", res.data.token);
+      window.localStorage.setItem("refreshToken", res.data.refreshtoken);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
+      return axios(originalRequest);
+    })    
   }
 
   if (
@@ -103,7 +122,14 @@ const User = {
   register: (user: IUserFormValues): Promise<IUser> =>
     requests.post(`/user/register`, user),
   facebookLogin: (accessToken: string) =>
-    requests.post(`user/facebook`, { accessToken })
+    requests.post(`user/facebook`, { accessToken }),
+  refreshToken: (token: string, refreshToken: string): Promise<string> =>
+    axios.post(`/user/refresh`, {token, refreshToken}).then(res => {
+      window.localStorage.setItem("jwt", res.data.token);
+      window.localStorage.setItem("refreshToken", res.data.refreshtoken);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
+      return res.data.token;
+    })
 };
 
 const Profiles = {
