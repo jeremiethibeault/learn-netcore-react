@@ -34,6 +34,7 @@
 - [Microsoft SignalR](https://www.npmjs.com/package/@microsoft/signalr) for realtime WebSocket updates
 - [React Infinite Scroller](https://www.npmjs.com/package/react-infinite-scroller) for infinite scrolling
 - [Security Headers](https://securityheaders.com/) to check security grade of the web app.
+- [React Facebook Login](https://www.npmjs.com/package/react-facebook-login) to login with Facebook.
 
 ### Database
 
